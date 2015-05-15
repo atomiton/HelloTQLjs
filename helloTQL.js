@@ -16,6 +16,10 @@ parkingSpaces = tqlConnection.request.select({
 	resources: {parkingSpace: '*'}
 });
 
+//
+// this used the synchronous version of the function so parkingSpaces returns
+// the results of the request.
+//
 if (parkingSpaces.error) {
 	console.log('Error:', parkingSpaces.error.code, parkingSpaces.error.text);
 } else {
