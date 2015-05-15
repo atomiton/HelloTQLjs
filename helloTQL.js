@@ -1,4 +1,4 @@
-TQL = require('./util/tql');
+TQL = require('./lib/tql');
 
 
 console.log('Welcome to Hello TQL, JavaScript.');
@@ -7,26 +7,40 @@ console.log('Getting all parking spaces.');
 //
 // establish a TQL connection context
 //
-tqlConnection = new TQL.Connection('http://cisco.atomiton.com:8080/fid-CIMTQLInterface-JVH2ZQ7YAAAH6AABAE2I4NJR');
+tqlConnection = new TQL.Connection(
+	{url: 'http://cisco.atomiton.com:8080/fid-CIMTQLInterface-JVH2ZQ7YAAAH6AABAE2I4NJR'}
+);
 
 //
-// get all the parking spaces from that context
+// get all the parking spaces from that context.
+// TODO resources OR just parkingSpace
+// TODO server must echo submitted case or we must lowercase everything.
 //
+/*
 parkingSpaces = tqlConnection.request.select({
 	resources: {parkingSpace: '*'}
 });
+// */
+parkingSpaces = tqlConnection.select({
+	resources: {parkingSpace: '*'}
+});
+
+parkingSpaces.then(function(response) {
+	response = JSON.stringify(response, null, 4);
+	console.log(response);
+}).catch(function(error) {
+	console.log('Error class:', error.class, ', error:', error.text);
+})
 
 //
 // this used the synchronous version of the function so parkingSpaces returns
 // the results of the request.
 //
+/*
 if (parkingSpaces.error) {
 	console.log('Error:', parkingSpaces.error.code, parkingSpaces.error.text);
 } else {
+	console.log(parkingSpaces.url);
 	console.log(parkingSpaces.selection);
 }
-
-update = tqlConnection.request.update({});
-if (update.error) {
-	console.log('Error:', update.error.code, update.error.text);
-}
+// */
