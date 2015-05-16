@@ -1,45 +1,40 @@
-# Thing Query Language (TQL) Hello World
+## Thing Query Language (TQL) Hello World, JavaScript edition.
 
-HelloTQL is the easiest way to get started with writing your first Java Application that uses TQL. 
+HelloTQLjs is an example showing how to use TQL from a JavaScript program. Links in this document, like [HelloTQLjs](https://github.com/Atomtion/HelloTQL), link to where the programs may be downloaded.
 
-You can get the [source code](https://github.com/Atomtion/HelloTQL) and create your own TQL Application with this [tutorial](http://tqldev.atomiton.com/docs)
+#### Notes
 
+HelloTQLjs is pre-alpha. While it serves as an example of using TQL from JavaScript it is under active development and 1) is not feature complete, 2) features of the object query syntax are subject to change, and 3) it's a great time to provide feedback and requests for features before they're complicated by compatibility concerns.
 
-## Requirements
+#### Requirements
 
-HelloTQL requires JDK 1.7+ and Eclipse Version: Luna Service Release 1 (4.4.1) or other earlier versions.
+HelloTQLjs runs using [node.js](https://nodejs.org/). It was developed using v.0.11.14 but should run with most recent versions. If you need to run multiple versions of node.js then Node Version Manager, [nvm](https://github.com/creationix/nvm), is a good solution. And [git](https://git-scm.com/downloads) is the easiest way to grab the code and keep it up-to-date.
 
-#### Setting up your Eclipse Project
+#### Setting up the environment and running the program
 
-1. Generate the eclipse project settings files by running this script (for windows use gradlew.bat) : 
+1. Clone the github repository with https or ssh. Both commands will create the directory `HelloTQLjs/` in your current working directory and then copy the files from github to it.
 ```
-cd HelloTQL
-./gradlew eclipse
-```
-
-2. Open the Eclipse and do File->Import->General->Existing Project into workspace.
-
-3. Select your local HelloTQL folder as your root directory
-
-4. HelloTQL project will now be loaded into Eclipse as a Java Project.
-
-
-Finally, you can start modifying the code as appropriate - for example to receive events and
-perform some business logic, post model updates etc .
-
-#### Building from command line
-
-1. You can build the application from command line as well by running this script (for windows use gradlew.bat) :
-```
-cd HelloTQL
-./gradlew installApp
+git clone https://github.com/atomiton/HelloTQLjs.git
+or
+git clone git@github.com:atomiton/HelloTQLjs.git
 ```
 
-2. The executable script will be installed in the folder: . 
+2. Install [node.js](https://nodejs.org/) if it is not installed. Install [nvm](https://github.com/creationix/nvm) if multiple versions of node are required.
 
-3. You can run the installed script :
-
+3. Change to the cloned repository.
 ```
-build/install/HelloTQL/bin/HelloTQL
+cd HelloTQLjs
 ```
 
+4. Install the dependencies in package.json using npm. npm is included as part of the [node.js](https://nodejs.org/) download. The `npm install` command fetches the dependencies noted in package.json.
+```
+npm install
+```
+
+5. Run the program.
+```
+node ./helloTQL.js
+or
+chmod +d helloTQL.js
+./helloTQL.js
+```

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 TQL = require('./lib/tql');
 
 
