@@ -26,8 +26,8 @@ parkingSpaces = tqlConnection.select({
 });
 
 parkingSpaces.then(function(response) {
-	response = JSON.stringify(response, null, 4);
-	console.log(response);
+	console.log('SELECT:', response.status);
+	console.log(JSON.stringify(response.result, null, 4));
 }).catch(function(error) {
 	console.log('Error class:', error.class, ', error:', error.text);
 })
