@@ -21,13 +21,16 @@ parkingSpaces = tqlConnection.request.select({
 	resources: {parkingSpace: '*'}
 });
 // */
-parkingSpaces = tqlConnection.select({
-	resources: {parkingSpace: '*'}
+parkingSpaces = tqlConnection.request({
+	select: {
+		parkingSpace: '*'
+	}
 });
 
 parkingSpaces.then(function(response) {
 	console.log('SELECT:', response.status);
-	console.log(JSON.stringify(response.result, null, 4));
+	var result = JSON.stringify(response.result, null, 4);
+	console.log(result);
 }).catch(function(error) {
 	console.log('Error class:', error.class, ', error:', error.text);
 })
