@@ -35,7 +35,7 @@ request3 = {select: {
 // execute the requests. the tql connection supports multiple simultaneous
 // requests.
 
-[request1, request2, request3].forEach(function(req) {
+[request1, request2].forEach(function(req) {
     var parkingSpaces = tqlConnection.request(req);
     console.log("Executed:", req);
     parkingSpaces.then(function(response) {
