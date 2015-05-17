@@ -25,19 +25,25 @@ parkingSpaces = tqlConnection.request.select({
 // */
 request1 = {select: {parkingspace: '*'}};
 request2 = {select: {parkingspace: 'WorldSensing.5385fc250cf2497dfe5679d1'}};
-request3 = {select: {$or: [
-    {parkingspace: "WorldSensing.5385fc250cf2497dfe5679d1"},
-    {parkingspace: "WorldSensing.5385ff2f0cf2497dfe567c0c"}
-    ]}
-};
+request3 = {select: {
+        $or: [
+            {parkingspace: "WorldSensing.5385fc250cf2497dfe5679d1"},
+            {parkingspace: "WorldSensing.5385ff2f0cf2497dfe567c0c"}
+        ]
+}};
 
-[request1, request2].forEach(function(req) {
+// execute the requests. the tql connection supports multiple simultaneous
+// requests.
+
+[request1, request2, request3].forEach(function(req) {
     var parkingSpaces = tqlConnection.request(req);
+    console.log("Executed:", req);
     parkingSpaces.then(function(response) {
-        console.log("Executed:", req);
+        console.log('Completed:', req);
         console.log("parking spaces found:", response.result.length);
     }).catch(function(error) {
-        console.log('Error class:', error.class, ', error:', error.text);
+        console.log('Completed:', req);
+        console.log('[Error class:', error.class + '] error:', error.text);
     })
 });
 
