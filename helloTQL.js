@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 TQL = require('./lib/tql');
+chalk = require('chalk');
 
 
 console.log('\n\nWelcome to Hello TQL, JavaScript.');
@@ -27,30 +28,58 @@ request4 = {select: {
             ]
         }
 }};
+request5 = {select: {parkingspace: {
+    label: "Parking lot 2",
+    demarcated: "true"
+    }
+}};
+request6 = {select: {parkingspace: {
+    label: "Parking lot 2",
+    "state.total": 62
+    }
+}};
+
+requests = [
+    request1, request2, request3, request4, request5, request6,
+];
+
+//
+// change the following function to show the desired results from each select.
+//
+function show(ps) {
+    //console.log(JSON.stringify(ps, null, 4));
+    console.log(ps.parkingspace.label, 'total spaces:', ps.parkingspace.state.total);
+}
+
 
 //
 // execute the requests. the tql connection supports multiple simultaneous
 // requests.
 //
-[request1, request2, request3, request4].forEach(function(req) {
+requests.forEach(function(req) {
     // get a promise back from the request.
     var parkingSpaces = tqlConnection.request(req);
     console.log("Executed:", JSON.stringify(req));
 
-    // when the request is done handle the result
+    // when each request is done handle the result
     parkingSpaces.then(function(response) {
-        console.log('Success:', JSON.stringify(req));
+        console.log(chalk.green('Success:', JSON.stringify(req)));
         console.log("parking spaces found:", response.result.length);
         // change the following test to view more or fewer results
-        if (true && response.result.length === 1) {
-            console.log(JSON.stringify(response.result, null, 4));
+        for (var i = 0; i < 10 && i < response.result.length; i++) {
+            show(response.result[i]);
         }
+        /*
+        if (true && response.result.length <= 10) {
+            console.log('total spots:', reponse.result.)
+        }
+        // */
     }).catch(function(error) {
-        console.log('Failure:', JSON.stringify(req));
+        console.log(chalk.red('Failure:', JSON.stringify(req)));
         if (error instanceof Error) {
-            console.log(error);
+            console.log(chalk.red(error));
         } else {
-            console.log('[Error type:', error.type + '] error:', error.text);            
+            console.log(chalk.red('[Error type:', error.type + '] error:', error.text));
         }
     })
 });

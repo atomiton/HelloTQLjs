@@ -16,10 +16,26 @@ request4 = {select: {
             ]
         }
 }};
+request5 = {select: {parkingspace: {
+    label: "Parking lot 2",
+    demarcated: "true"
+    }
+}};
+request6 = {select: {parkingspace: {
+    label: "Parking lot 2",
+    "space.total": 62
+    }
+}};
+request7 = {select: {parkingspace: {$or: [
+    {label: "Parking lot 2"},
+    {"state.total": 184}
+    ]
+}}};
+
 
 
 requests = [
-    request1, request2, request3, request4
+    request1, request2, request3, request4, request5, request6, request7
 ];
 
 requests.forEach(function(req) {
