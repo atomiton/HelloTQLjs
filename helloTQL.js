@@ -3,7 +3,7 @@
 TQL = require('./lib/tql');
 
 
-console.log('Welcome to Hello TQL, JavaScript.');
+console.log('\n\nWelcome to Hello TQL, JavaScript.');
 console.log('Get parking spaces.');
 
 //
@@ -15,14 +15,7 @@ tqlConnection = new TQL.Connection(
 
 //
 // get all the parking spaces from that context.
-// TODO resources OR just parkingSpace
-// TODO server must echo submitted case or we must lowercase everything.
 //
-/*
-parkingSpaces = tqlConnection.request.select({
-    resources: {parkingSpace: '*'}
-});
-// */
 request1 = {select: {parkingspace: {sid: '*'}}};
 request2 = {select: {parkingspace: {sid: 'WorldSensing.5385fc250cf2497dfe5679d1'}}};
 request3 = {select: {"parkingspace.opparams.zonetype": "NoParking"}};
@@ -35,46 +28,30 @@ request4 = {select: {
         }
 }};
 
+//
 // execute the requests. the tql connection supports multiple simultaneous
 // requests.
-
+//
 [request1, request2, request3, request4].forEach(function(req) {
+    // get a promise back from the request.
     var parkingSpaces = tqlConnection.request(req);
-    console.log("Executed:", req);
+    console.log("Executed:", JSON.stringify(req));
+
+    // when the request is done handle the result
     parkingSpaces.then(function(response) {
-        console.log('Completed:', req);
+        console.log('Success:', JSON.stringify(req));
         console.log("parking spaces found:", response.result.length);
-        if (false || response.result.length === 1) {
-            console.log(JSON.stringify(response.result));
+        // change the following test to view more or fewer results
+        if (true && response.result.length === 1) {
+            console.log(JSON.stringify(response.result, null, 4));
         }
     }).catch(function(error) {
-        console.log('Completed:', req);
-        console.log('[Error class:', error.class + '] error:', error.text);
+        console.log('Failure:', JSON.stringify(req));
+        if (error instanceof Error) {
+            console.log(error);
+        } else {
+            console.log('[Error type:', error.type + '] error:', error.text);            
+        }
     })
 });
 
-/*
-
-parkingSpaces = tqlConnection.request(request2);
-
-parkingSpaces.then(function(response) {
-    console.log('SELECT:', response.status);
-    var result = JSON.stringify(response.result, null, 4);
-    console.log(result);
-}).catch(function(error) {
-    console.log('Error class:', error.class, ', error:', error.text);
-})
-// */
-
-//
-// this used the synchronous version of the function so parkingSpaces returns
-// the results of the request.
-//
-/*
-if (parkingSpaces.error) {
-    console.log('Error:', parkingSpaces.error.code, parkingSpaces.error.text);
-} else {
-    console.log(parkingSpaces.url);
-    console.log(parkingSpaces.selection);
-}
-// */
